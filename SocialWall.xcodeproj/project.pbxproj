@@ -7,23 +7,93 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		666ABA951D0EC289001BAA43 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666ABA941D0EC289001BAA43 /* SettingsSplitViewController.swift */; };
+		666ABAB51D0ECE85001BAA43 /* HashtagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666ABAB41D0ECE85001BAA43 /* HashtagsTableViewController.swift */; };
+		6679EE281D083D5D00FC04CE /* DeviceControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6679EE271D083D5D00FC04CE /* DeviceControllerProtocol.swift */; };
+		6679EE2A1D083DCD00FC04CE /* CardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6679EE291D083DCD00FC04CE /* CardCollectionViewController.swift */; };
+		667C5FFE1CE4635B00BE5F6D /* SecondaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C5FFD1CE4635B00BE5F6D /* SecondaryViewController.swift */; };
+		667C60001CE466ED00BE5F6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 667C5FFF1CE466ED00BE5F6D /* Main.storyboard */; };
+		667C60041CE736F700BE5F6D /* FacebookRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C60031CE736F700BE5F6D /* FacebookRequest.swift */; };
+		667C60071CE7372C00BE5F6D /* FacebookPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C60061CE7372C00BE5F6D /* FacebookPost.swift */; };
+		667C600B1CE8F6A700BE5F6D /* LargeImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C600A1CE8F6A700BE5F6D /* LargeImageCollectionViewCell.swift */; };
+		667C600D1CE8FCD600BE5F6D /* SecondScreenCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C600C1CE8FCD600BE5F6D /* SecondScreenCollectionViewLayout.swift */; };
+		667C600F1CEB0B8500BE5F6D /* SocialContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C600E1CEB0B8500BE5F6D /* SocialContent.swift */; };
+		667C81141CF2E74B00D18F7B /* MosiacWallExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C81131CF2E74B00D18F7B /* MosiacWallExtension.swift */; };
 		669467121CE2477A0032C7A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669467111CE2477A0032C7A0 /* AppDelegate.swift */; };
-		669467141CE2477A0032C7A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669467131CE2477A0032C7A0 /* ViewController.swift */; };
-		669467171CE2477A0032C7A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669467151CE2477A0032C7A0 /* Main.storyboard */; };
+		669467141CE2477A0032C7A0 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669467131CE2477A0032C7A0 /* DeviceViewController.swift */; };
+		669467171CE2477A0032C7A0 /* SecondScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669467151CE2477A0032C7A0 /* SecondScreen.storyboard */; };
 		6694671A1CE2477A0032C7A0 /* SocialWall.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 669467181CE2477A0032C7A0 /* SocialWall.xcdatamodeld */; };
 		6694671C1CE2477A0032C7A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6694671B1CE2477A0032C7A0 /* Assets.xcassets */; };
 		6694671F1CE2477A0032C7A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6694671D1CE2477A0032C7A0 /* LaunchScreen.storyboard */; };
+		6694672B1CE247850032C7A0 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669467271CE247850032C7A0 /* MediaItem.swift */; };
+		6694672C1CE247850032C7A0 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669467281CE247850032C7A0 /* Tweet.swift */; };
+		6694672D1CE247850032C7A0 /* TwitterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669467291CE247850032C7A0 /* TwitterRequest.swift */; };
+		6694672E1CE247850032C7A0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6694672A1CE247850032C7A0 /* User.swift */; };
+		66953F311CE27AB300F026C9 /* TwitterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66953F301CE27AB200F026C9 /* TwitterCollectionViewCell.swift */; };
+		66CC1C5D1CEF98AE00C44957 /* FacebookSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CC1C5C1CEF98AE00C44957 /* FacebookSearch.swift */; };
+		66E15DEF1CEC911D00AA665B /* PresenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E15DEE1CEC911D00AA665B /* PresenterViewController.swift */; };
+		66E15DF11CEC9C6D00AA665B /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E15DF01CEC9C6D00AA665B /* HelperFunctions.swift */; };
+		66E15DF31CECFD2200AA665B /* MosiacCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E15DF21CECFD2200AA665B /* MosiacCollectionViewLayout.swift */; };
+		66E15DF61CED1D1300AA665B /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E15DF51CED1D1300AA665B /* SettingsTableViewController.swift */; };
+		66F3D6671CF06CF500677DA6 /* FacebookPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F3D6661CF06CF500677DA6 /* FacebookPage.swift */; };
+		66F3D6691CF0751700677DA6 /* FbPagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F3D6681CF0751700677DA6 /* FbPagesTableViewController.swift */; };
+		66F3D66B1CF0753500677DA6 /* FbPageSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F3D66A1CF0753500677DA6 /* FbPageSearchTableViewController.swift */; };
+		66F3D66E1CF0756600677DA6 /* FbPageDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F3D66D1CF0756600677DA6 /* FbPageDetailTableViewController.swift */; };
+		66F3D6701CF0BAE800677DA6 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F3D66F1CF0BAE800677DA6 /* CoreDataHelpers.swift */; };
+		66F3D6721CF0D04800677DA6 /* SocialWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F3D6711CF0D04800677DA6 /* SocialWall.swift */; };
+		66F3D6741CF2150500677DA6 /* CuratedWallsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F3D6731CF2150500677DA6 /* CuratedWallsTableViewController.swift */; };
+		66F3D6771CF2571F00677DA6 /* PopupContenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F3D6751CF2571F00677DA6 /* PopupContenViewController.swift */; };
+		66F3D6781CF2571F00677DA6 /* PopupContenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66F3D6761CF2571F00677DA6 /* PopupContenViewController.xib */; };
+		66F3D67B1CF2582E00677DA6 /* PopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66F3D67A1CF2582E00677DA6 /* PopupView.xib */; };
+		66F3D67D1CF2624600677DA6 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F3D67C1CF2624600677DA6 /* PopupView.swift */; };
+		7725B9E204AA7C71C6DF5B10 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942BF0B7ECBCE7C0789A7BA9 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1853FBA6F14A9CCC70A4C2EC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		666ABA941D0EC289001BAA43 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
+		666ABAB41D0ECE85001BAA43 /* HashtagsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagsTableViewController.swift; sourceTree = "<group>"; };
+		6679EE271D083D5D00FC04CE /* DeviceControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceControllerProtocol.swift; sourceTree = "<group>"; };
+		6679EE291D083DCD00FC04CE /* CardCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCollectionViewController.swift; sourceTree = "<group>"; };
+		667C5FFD1CE4635B00BE5F6D /* SecondaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondaryViewController.swift; sourceTree = "<group>"; };
+		667C5FFF1CE466ED00BE5F6D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		667C60031CE736F700BE5F6D /* FacebookRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookRequest.swift; sourceTree = "<group>"; };
+		667C60061CE7372C00BE5F6D /* FacebookPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookPost.swift; sourceTree = "<group>"; };
+		667C600A1CE8F6A700BE5F6D /* LargeImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		667C600C1CE8FCD600BE5F6D /* SecondScreenCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondScreenCollectionViewLayout.swift; sourceTree = "<group>"; };
+		667C600E1CEB0B8500BE5F6D /* SocialContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialContent.swift; sourceTree = "<group>"; };
+		667C81131CF2E74B00D18F7B /* MosiacWallExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosiacWallExtension.swift; sourceTree = "<group>"; };
 		6694670E1CE2477A0032C7A0 /* SocialWall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialWall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		669467111CE2477A0032C7A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		669467131CE2477A0032C7A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		669467161CE2477A0032C7A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		669467131CE2477A0032C7A0 /* DeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
+		669467161CE2477A0032C7A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SecondScreen.storyboard; sourceTree = "<group>"; };
 		669467191CE2477A0032C7A0 /* SocialWall.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SocialWall.xcdatamodel; sourceTree = "<group>"; };
 		6694671B1CE2477A0032C7A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6694671E1CE2477A0032C7A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		669467201CE2477A0032C7A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		669467271CE247850032C7A0 /* MediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
+		669467281CE247850032C7A0 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
+		669467291CE247850032C7A0 /* TwitterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterRequest.swift; sourceTree = "<group>"; };
+		6694672A1CE247850032C7A0 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		66953F301CE27AB200F026C9 /* TwitterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterCollectionViewCell.swift; sourceTree = "<group>"; };
+		66CC1C5C1CEF98AE00C44957 /* FacebookSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookSearch.swift; sourceTree = "<group>"; };
+		66E15DEE1CEC911D00AA665B /* PresenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenterViewController.swift; sourceTree = "<group>"; };
+		66E15DF01CEC9C6D00AA665B /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
+		66E15DF21CECFD2200AA665B /* MosiacCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosiacCollectionViewLayout.swift; sourceTree = "<group>"; };
+		66E15DF51CED1D1300AA665B /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		66F3D6661CF06CF500677DA6 /* FacebookPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookPage.swift; sourceTree = "<group>"; };
+		66F3D6681CF0751700677DA6 /* FbPagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FbPagesTableViewController.swift; sourceTree = "<group>"; };
+		66F3D66A1CF0753500677DA6 /* FbPageSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FbPageSearchTableViewController.swift; sourceTree = "<group>"; };
+		66F3D66D1CF0756600677DA6 /* FbPageDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FbPageDetailTableViewController.swift; sourceTree = "<group>"; };
+		66F3D66F1CF0BAE800677DA6 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
+		66F3D6711CF0D04800677DA6 /* SocialWall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialWall.swift; sourceTree = "<group>"; };
+		66F3D6731CF2150500677DA6 /* CuratedWallsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CuratedWallsTableViewController.swift; sourceTree = "<group>"; };
+		66F3D6751CF2571F00677DA6 /* PopupContenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupContenViewController.swift; sourceTree = "<group>"; };
+		66F3D6761CF2571F00677DA6 /* PopupContenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopupContenViewController.xib; sourceTree = "<group>"; };
+		66F3D67A1CF2582E00677DA6 /* PopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopupView.xib; sourceTree = "<group>"; };
+		66F3D67C1CF2624600677DA6 /* PopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		70423252FCB1649C3C868966 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		942BF0B7ECBCE7C0789A7BA9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +101,74 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7725B9E204AA7C71C6DF5B10 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BA3BDD51B76ED90703C0452 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1853FBA6F14A9CCC70A4C2EC /* Pods.debug.xcconfig */,
+				70423252FCB1649C3C868966 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		63F9B02C2EDB7AA8FA0B7CF2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				942BF0B7ECBCE7C0789A7BA9 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		667C60011CE46B3F00BE5F6D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				667C5FFF1CE466ED00BE5F6D /* Main.storyboard */,
+				669467131CE2477A0032C7A0 /* DeviceViewController.swift */,
+				6679EE291D083DCD00FC04CE /* CardCollectionViewController.swift */,
+				66E15DEE1CEC911D00AA665B /* PresenterViewController.swift */,
+				6679EE271D083D5D00FC04CE /* DeviceControllerProtocol.swift */,
+				66F3D66C1CF0753D00677DA6 /* Settings */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		667C60021CE46B4800BE5F6D /* SecondScreen */ = {
+			isa = PBXGroup;
+			children = (
+				669467151CE2477A0032C7A0 /* SecondScreen.storyboard */,
+				66F3D6791CF2572600677DA6 /* PopupContent */,
+				667C5FFD1CE4635B00BE5F6D /* SecondaryViewController.swift */,
+				66953F301CE27AB200F026C9 /* TwitterCollectionViewCell.swift */,
+				667C600A1CE8F6A700BE5F6D /* LargeImageCollectionViewCell.swift */,
+			);
+			name = SecondScreen;
+			sourceTree = "<group>";
+		};
+		667C60051CE7370500BE5F6D /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				667C60031CE736F700BE5F6D /* FacebookRequest.swift */,
+				667C60061CE7372C00BE5F6D /* FacebookPost.swift */,
+				66CC1C5C1CEF98AE00C44957 /* FacebookSearch.swift */,
+				66F3D6661CF06CF500677DA6 /* FacebookPage.swift */,
+			);
+			name = Facebook;
+			path = "Stanford-iOS-Course-2015-CS193p-Smashtag-Swift-2-master";
+			sourceTree = "<group>";
+		};
 		669467051CE2477A0032C7A0 = {
 			isa = PBXGroup;
 			children = (
 				669467101CE2477A0032C7A0 /* SocialWall */,
 				6694670F1CE2477A0032C7A0 /* Products */,
+				3BA3BDD51B76ED90703C0452 /* Pods */,
+				63F9B02C2EDB7AA8FA0B7CF2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,14 +184,67 @@
 			isa = PBXGroup;
 			children = (
 				669467111CE2477A0032C7A0 /* AppDelegate.swift */,
-				669467131CE2477A0032C7A0 /* ViewController.swift */,
-				669467151CE2477A0032C7A0 /* Main.storyboard */,
+				66E15DF01CEC9C6D00AA665B /* HelperFunctions.swift */,
+				66F3D66F1CF0BAE800677DA6 /* CoreDataHelpers.swift */,
+				667C60011CE46B3F00BE5F6D /* Main */,
+				66E15DF41CECFD5B00AA665B /* MosiacLayout */,
+				667C60021CE46B4800BE5F6D /* SecondScreen */,
 				6694671B1CE2477A0032C7A0 /* Assets.xcassets */,
+				667C600E1CEB0B8500BE5F6D /* SocialContent.swift */,
+				66F3D6711CF0D04800677DA6 /* SocialWall.swift */,
+				667C60051CE7370500BE5F6D /* Facebook */,
+				669467261CE247850032C7A0 /* Stanford-iOS-Course-2015-CS193p-Smashtag-Swift-2-master */,
 				6694671D1CE2477A0032C7A0 /* LaunchScreen.storyboard */,
 				669467201CE2477A0032C7A0 /* Info.plist */,
 				669467181CE2477A0032C7A0 /* SocialWall.xcdatamodeld */,
 			);
 			path = SocialWall;
+			sourceTree = "<group>";
+		};
+		669467261CE247850032C7A0 /* Stanford-iOS-Course-2015-CS193p-Smashtag-Swift-2-master */ = {
+			isa = PBXGroup;
+			children = (
+				669467271CE247850032C7A0 /* MediaItem.swift */,
+				669467281CE247850032C7A0 /* Tweet.swift */,
+				669467291CE247850032C7A0 /* TwitterRequest.swift */,
+				6694672A1CE247850032C7A0 /* User.swift */,
+			);
+			path = "Stanford-iOS-Course-2015-CS193p-Smashtag-Swift-2-master";
+			sourceTree = "<group>";
+		};
+		66E15DF41CECFD5B00AA665B /* MosiacLayout */ = {
+			isa = PBXGroup;
+			children = (
+				667C600C1CE8FCD600BE5F6D /* SecondScreenCollectionViewLayout.swift */,
+				66E15DF21CECFD2200AA665B /* MosiacCollectionViewLayout.swift */,
+				667C81131CF2E74B00D18F7B /* MosiacWallExtension.swift */,
+			);
+			name = MosiacLayout;
+			sourceTree = "<group>";
+		};
+		66F3D66C1CF0753D00677DA6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				666ABA941D0EC289001BAA43 /* SettingsSplitViewController.swift */,
+				66E15DF51CED1D1300AA665B /* SettingsTableViewController.swift */,
+				66F3D6681CF0751700677DA6 /* FbPagesTableViewController.swift */,
+				66F3D66D1CF0756600677DA6 /* FbPageDetailTableViewController.swift */,
+				66F3D66A1CF0753500677DA6 /* FbPageSearchTableViewController.swift */,
+				666ABAB41D0ECE85001BAA43 /* HashtagsTableViewController.swift */,
+				66F3D6731CF2150500677DA6 /* CuratedWallsTableViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		66F3D6791CF2572600677DA6 /* PopupContent */ = {
+			isa = PBXGroup;
+			children = (
+				66F3D6751CF2571F00677DA6 /* PopupContenViewController.swift */,
+				66F3D6761CF2571F00677DA6 /* PopupContenViewController.xib */,
+				66F3D67A1CF2582E00677DA6 /* PopupView.xib */,
+				66F3D67C1CF2624600677DA6 /* PopupView.swift */,
+			);
+			name = PopupContent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +254,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 669467231CE2477A0032C7A0 /* Build configuration list for PBXNativeTarget "SocialWall" */;
 			buildPhases = (
+				382B5C7D0331FECC10F03B35 /* Check Pods Manifest.lock */,
 				6694670A1CE2477A0032C7A0 /* Sources */,
 				6694670B1CE2477A0032C7A0 /* Frameworks */,
 				6694670C1CE2477A0032C7A0 /* Resources */,
+				0143C4C70178C1D8D27F36E8 /* Embed Pods Frameworks */,
+				C36DD2CBA1B1C1289DD47E4F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -127,32 +310,113 @@
 			files = (
 				6694671F1CE2477A0032C7A0 /* LaunchScreen.storyboard in Resources */,
 				6694671C1CE2477A0032C7A0 /* Assets.xcassets in Resources */,
-				669467171CE2477A0032C7A0 /* Main.storyboard in Resources */,
+				66F3D6781CF2571F00677DA6 /* PopupContenViewController.xib in Resources */,
+				66F3D67B1CF2582E00677DA6 /* PopupView.xib in Resources */,
+				669467171CE2477A0032C7A0 /* SecondScreen.storyboard in Resources */,
+				667C60001CE466ED00BE5F6D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0143C4C70178C1D8D27F36E8 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		382B5C7D0331FECC10F03B35 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C36DD2CBA1B1C1289DD47E4F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6694670A1CE2477A0032C7A0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F3D6671CF06CF500677DA6 /* FacebookPage.swift in Sources */,
 				6694671A1CE2477A0032C7A0 /* SocialWall.xcdatamodeld in Sources */,
-				669467141CE2477A0032C7A0 /* ViewController.swift in Sources */,
+				667C60071CE7372C00BE5F6D /* FacebookPost.swift in Sources */,
+				667C600B1CE8F6A700BE5F6D /* LargeImageCollectionViewCell.swift in Sources */,
+				66F3D6741CF2150500677DA6 /* CuratedWallsTableViewController.swift in Sources */,
+				667C81141CF2E74B00D18F7B /* MosiacWallExtension.swift in Sources */,
+				666ABAB51D0ECE85001BAA43 /* HashtagsTableViewController.swift in Sources */,
+				66F3D6691CF0751700677DA6 /* FbPagesTableViewController.swift in Sources */,
+				6694672C1CE247850032C7A0 /* Tweet.swift in Sources */,
+				666ABA951D0EC289001BAA43 /* SettingsSplitViewController.swift in Sources */,
+				66F3D6701CF0BAE800677DA6 /* CoreDataHelpers.swift in Sources */,
+				66CC1C5D1CEF98AE00C44957 /* FacebookSearch.swift in Sources */,
+				6694672B1CE247850032C7A0 /* MediaItem.swift in Sources */,
+				669467141CE2477A0032C7A0 /* DeviceViewController.swift in Sources */,
+				66F3D66E1CF0756600677DA6 /* FbPageDetailTableViewController.swift in Sources */,
 				669467121CE2477A0032C7A0 /* AppDelegate.swift in Sources */,
+				667C60041CE736F700BE5F6D /* FacebookRequest.swift in Sources */,
+				6679EE2A1D083DCD00FC04CE /* CardCollectionViewController.swift in Sources */,
+				66E15DF61CED1D1300AA665B /* SettingsTableViewController.swift in Sources */,
+				6694672D1CE247850032C7A0 /* TwitterRequest.swift in Sources */,
+				66E15DF11CEC9C6D00AA665B /* HelperFunctions.swift in Sources */,
+				66F3D6771CF2571F00677DA6 /* PopupContenViewController.swift in Sources */,
+				66F3D66B1CF0753500677DA6 /* FbPageSearchTableViewController.swift in Sources */,
+				667C600F1CEB0B8500BE5F6D /* SocialContent.swift in Sources */,
+				66E15DF31CECFD2200AA665B /* MosiacCollectionViewLayout.swift in Sources */,
+				66F3D67D1CF2624600677DA6 /* PopupView.swift in Sources */,
+				66953F311CE27AB300F026C9 /* TwitterCollectionViewCell.swift in Sources */,
+				667C600D1CE8FCD600BE5F6D /* SecondScreenCollectionViewLayout.swift in Sources */,
+				6679EE281D083D5D00FC04CE /* DeviceControllerProtocol.swift in Sources */,
+				66E15DEF1CEC911D00AA665B /* PresenterViewController.swift in Sources */,
+				66F3D6721CF0D04800677DA6 /* SocialWall.swift in Sources */,
+				6694672E1CE247850032C7A0 /* User.swift in Sources */,
+				667C5FFE1CE4635B00BE5F6D /* SecondaryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		669467151CE2477A0032C7A0 /* Main.storyboard */ = {
+		669467151CE2477A0032C7A0 /* SecondScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				669467161CE2477A0032C7A0 /* Base */,
 			);
-			name = Main.storyboard;
+			name = SecondScreen.storyboard;
 			sourceTree = "<group>";
 		};
 		6694671D1CE2477A0032C7A0 /* LaunchScreen.storyboard */ = {
@@ -253,6 +517,7 @@
 		};
 		669467241CE2477A0032C7A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1853FBA6F14A9CCC70A4C2EC /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SocialWall/Info.plist;
@@ -264,6 +529,7 @@
 		};
 		669467251CE2477A0032C7A0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 70423252FCB1649C3C868966 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SocialWall/Info.plist;
@@ -292,6 +558,7 @@
 				669467251CE2477A0032C7A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -6,18 +6,93 @@
 //  Copyright © 2016 James Birtwell. All rights reserved.
 //
 
+struct GlobalAppWall {
+    static let kCoreDataId = "main"
+    static var activeSocialWall: SocialWall!
+    static var inactiveFBPages = [FacebookPage]()
+    static let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    static var wallNeedsLoading = true
+    static var fetchingData = 0
+}
+
 import UIKit
 import CoreData
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    static let kFacebookAppID = "674033149402261"
 
     var window: UIWindow?
-
+    var secondaryWindow: UIWindow?
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        //Subscribing to a UIScreenDidConnect/DisconnectNotification to react to changes in the status of connected screens.
+       
+        let screenConnectionStatusChangedNotification = NSNotificationCenter.defaultCenter()
+        screenConnectionStatusChangedNotification.addObserver(self, selector:  #selector(self.screenConnectionStatusChanged), name:UIScreenDidConnectNotification, object:nil)
+        screenConnectionStatusChangedNotification.addObserver(self, selector: #selector(self.screenConnectionStatusChanged), name:UIScreenDidDisconnectNotification, object:nil)
+        
+        //Initial check on how many screens are connected to the device on launch of the application.
+        if (UIScreen.screens().count > 1) {
+            self.screenConnectionStatusChanged()
+        }
+        
+        
+        checkLoadWall()
         // Override point for customization after application launch.
+        
         return true
+    }
+    
+    func checkLoadWall() {
+        if let socialWallObject = CoreDataHelpers.fetchObjects(SocialWall.Keys.kEntityName, predicate: GlobalAppWall.kCoreDataId) {
+            print("walls = \(socialWallObject.count)")
+            GlobalAppWall.activeSocialWall = SocialWall(object: socialWallObject[0])
+            if  let objects = CoreDataHelpers.fetchObjects(FacebookPage.PageKeys.kEntityName) {
+                print("pages = \(objects.count)")
+                for page in objects {
+                    if let pageName = page.valueForKey(FacebookPage.PageKeys.kName) as? String  {
+                        if GlobalAppWall.activeSocialWall.pages.contains({aPage in aPage.pageName == pageName}) {
+                               GlobalAppWall.activeSocialWall.pages.append(FacebookPage(object: page))
+                        } else {
+                            GlobalAppWall.inactiveFBPages.append(FacebookPage(object: page))
+                        }
+                    }
+                }
+            }
+        } 
+    }
+
+    //Managing connection and disconnection of screens.
+    func screenConnectionStatusChanged () {
+        if (UIScreen.screens().count == 1) {
+            secondaryWindow!.rootViewController = nil
+            
+        }   else {
+            let screens : Array = UIScreen.screens()
+            let newScreen : AnyObject! = screens.last
+            
+            secondaryScreenSetup(newScreen as! UIScreen)
+            let storyboard = UIStoryboard(name: "SecondScreen", bundle:nil)
+            if let rvc = storyboard.instantiateViewControllerWithIdentifier("SecondScreen") as? SecondaryViewController {
+            secondaryWindow!.rootViewController = rvc
+            secondaryWindow!.makeKeyAndVisible()
+            }
+        }
+        
+    }
+    
+    //Here we set up the secondary screen.
+    func secondaryScreenSetup (screen : UIScreen) {
+        let newWindow : UIWindow = UIWindow(frame: screen.bounds)
+        newWindow.screen = screen
+        newWindow.hidden = false
+        
+        secondaryWindow = newWindow
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -42,6 +117,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+    }
+    
+    // MARK: - Split view
+    
+    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool {
+        if let secondaryAsNavController = secondaryViewController as? UINavigationController {
+            if let topAsDetailController = secondaryAsNavController.topViewController as? FbPagesTableViewController {
+//                if topAsDetailController == nil {
+                    // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+                    //If we don't do this, detail1 will open as the first view when run on iPhone, comment and see
+                    return true
+//                }
+            }
+        }
+        return false
     }
 
     // MARK: - Core Data stack
@@ -72,7 +162,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
 
-            dict[NSUnderlyingErrorKey] = error as NSError
+            dict[NSUnderlyingErrorKey] = error as! NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.

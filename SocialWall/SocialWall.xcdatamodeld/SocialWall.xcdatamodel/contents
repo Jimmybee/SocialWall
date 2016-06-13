@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Automatic">
+    <entity name="FacebookPage" syncable="YES">
+        <attribute name="active" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="fan_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="wall" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SocialWall" inverseName="pages" inverseEntity="SocialWall" syncable="YES"/>
+    </entity>
+    <entity name="Hashtags" syncable="YES">
+        <attribute name="hashtag" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="wall" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SocialWall" inverseName="hashtags" inverseEntity="SocialWall" syncable="YES"/>
+    </entity>
+    <entity name="Post" syncable="YES">
+        <attribute name="from" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imgData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="src" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="story" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="wall" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SocialWall" inverseName="posts" inverseEntity="SocialWall" syncable="YES"/>
+    </entity>
+    <entity name="SocialWall" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="hashtags" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Hashtags" inverseName="wall" inverseEntity="Hashtags" syncable="YES"/>
+        <relationship name="pages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacebookPage" inverseName="wall" inverseEntity="FacebookPage" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="wall" inverseEntity="Post" syncable="YES"/>
+        <relationship name="tweets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tweet" inverseName="wall" inverseEntity="Tweet" syncable="YES"/>
+    </entity>
+    <entity name="Tweet" syncable="YES">
+        <attribute name="imgData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="tweet" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="wall" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SocialWall" inverseName="tweets" inverseEntity="SocialWall" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="FacebookPage" positionX="-378" positionY="-18" width="128" height="133"/>
+        <element name="Post" positionX="-207" positionY="54" width="128" height="150"/>
+        <element name="SocialWall" positionX="-54" positionY="27" width="128" height="120"/>
+        <element name="Tweet" positionX="-216" positionY="36" width="128" height="105"/>
+        <element name="Hashtags" positionX="-216" positionY="81" width="128" height="75"/>
+    </elements>
 </model>
