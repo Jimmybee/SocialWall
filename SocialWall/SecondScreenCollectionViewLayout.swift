@@ -14,11 +14,15 @@ class SecondScreenCollectionViewLayout : MosiacCollectionViewLayout {
         screenHeight = UIScreen.screens().last!.bounds.size.height
         screenWidth = UIScreen.screens().last!.bounds.size.width
         
-        gridSize = HelperFunctions.gcd(screenHeight, screenWidth)
+        if screenWidth != 0 {
+            gridSize = HelperFunctions.gcd(screenHeight, screenWidth)
+        }
         noOfSquares = screenWidth/gridSize
-        if noOfSquares < 5 {
+
+        if noOfSquares < 7 {
             gridSize = gridSize / 2
         }
+        
         aspectRatio = screenWidth/screenHeight
     
     }

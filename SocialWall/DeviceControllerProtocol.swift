@@ -11,4 +11,5 @@ import Foundation
 protocol DeviceController {
     func performSingleScreenOperations ()
     func performDualScreenOperations ()
+    func removeDisplaysWhileLoading()
 }

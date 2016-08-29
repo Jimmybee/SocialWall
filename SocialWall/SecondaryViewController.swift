@@ -10,15 +10,21 @@ import UIKit
 
 class SecondaryViewController: UIViewController, MosaicSocialWall {
     
-    private var mirroredScreenResolution : CGRect?
+    static let kDataReadyForDisplay = "dataReadyForDisplay"
+    
+    private var mirroredScreenResolution : CGRect? {
+        didSet {
+            print("mirroredScreenResolution: \(mirroredScreenResolution)")
+        }
+    }
     var timerLayout: NSTimer?
     var timerPopout: NSTimer?
+    var delegate: DeviceViewController?
     
     var socialArray = [SocialContent]()
     var expanded = false
     
     var expandedImage = UIImageView()
-    var popupView = PopupView()
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var popupLabel: UILabel!
@@ -31,23 +37,35 @@ class SecondaryViewController: UIViewController, MosaicSocialWall {
     @IBOutlet weak var imgBottom: NSLayoutConstraint!
     @IBOutlet weak var imgWidth: NSLayoutConstraint!
     @IBOutlet weak var imgHeight: NSLayoutConstraint!
+    @IBOutlet weak var imgSide: NSLayoutConstraint!
     
     @IBOutlet weak var viewBorder: UIView!
     @IBOutlet weak var viewBorderHeight: NSLayoutConstraint!
     @IBOutlet weak var viewBorderWidth: NSLayoutConstraint!
     
     @IBOutlet weak var detailView: UIView!
-    @IBOutlet weak var detailViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var detailViewBottom: NSLayoutConstraint! //toSuperview
+//    @IBOutlet weak var detailTopImgGap: NSLayoutConstraint!
     
-    @IBOutlet weak var detailTopImgGap: NSLayoutConstraint!
+    @IBOutlet weak var sideDetailView: UIView!
+    @IBOutlet weak var sideDetailTrailingToSuperivew: NSLayoutConstraint!
+    @IBOutlet weak var sideMessage: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.blackColor()
-        self.popupView.alpha = 0
+        self.hiddenPopupView.alpha = 0
         self.viewBorder.layer.borderColor = UIColor.blackColor().CGColor
         self.viewBorder.layer.borderWidth = 1
         
+        self.setToDummyArray()
+    }
+    
+    func setToDummyArray() {
+        self.socialArray.removeAll()
+        for _ in 0...120 {
+            self.socialArray.append(DummyContent())
+        }
     }
     
 //    @IBOutlet weak var popupImage: UIImageView!
@@ -57,14 +75,40 @@ class SecondaryViewController: UIViewController, MosaicSocialWall {
         super.didReceiveMemoryWarning()
     }
     
+    func attemptDisplay() {
+        timerPopout?.invalidate()
+        timerPopout = nil
+        if self.collectionView.visibleCells().count == 0 {
+            displayTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(attemptDisplay), userInfo: nil, repeats: false)
+            return
+        }
+        if GlobalAppWall.activeSocialWall.displayContent.count == 0 {
+            displayTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(attemptDisplay), userInfo: nil, repeats: false)
+            return
+        }
+        if GlobalAppWall.activeSocialWall.displayContent.count < self.collectionView.visibleCells().count {
+            delegate?.expandWall()
+            print("//Geting more data")
+            return
+        }
+        if GlobalAppWall.activeSocialWall.displayContent.count > self.socialArray.count {
+            self.socialArray = GlobalAppWall.activeSocialWall.displayContent
+        } else {
+        self.socialArray.replaceRange(0...GlobalAppWall.activeSocialWall.displayContent.count-1, with: GlobalAppWall.activeSocialWall.displayContent)
+            dispatch_async(dispatch_get_main_queue(), {
+                self.collectionView.reloadData()
+                print("start popout")
+                self.startPopoutTimer()
+            })
+        }
+     
+    }
+    
+    var displayTimer: NSTimer?
     
     func updateCollectionView () {
-        timerPopout?.invalidate()
-        dispatch_async(dispatch_get_main_queue(), {
-            self.collectionView.reloadData()
-            self.startPopoutTimer()
-
-        })
+        print("startTimer")
+        attemptDisplay()
     }
     
     func getAttributes () {
@@ -74,6 +118,14 @@ class SecondaryViewController: UIViewController, MosaicSocialWall {
     }
     
     func timerShowPopup() {
+        print("show popup")
+        timerLayout?.invalidate()
+        timerLayout = nil
+        if !GlobalAppWall.screenConnected {
+            timerPopout?.invalidate()
+            timerPopout = nil
+            return
+        }
         let random = arc4random_uniform(UInt32(self.collectionView.visibleCells().count))
         let randomIndex = Int(random) + 1
         let nsIndexPath = NSIndexPath(forItem: randomIndex, inSection: 0)
@@ -81,16 +133,28 @@ class SecondaryViewController: UIViewController, MosaicSocialWall {
     }
     
     func showHiddenPopup(indexPath: NSIndexPath ) {
-        let frame = collectionView.layoutAttributesForItemAtIndexPath(indexPath)!.frame
         
-        popupImage.image = socialArray[indexPath.row].getImage()
-        if let post = socialArray[indexPath.row] as? FacebookPost {
-
-            popupLabel.text = post.message
+        
+        
+        if collectionView.layoutAttributesForItemAtIndexPath(indexPath) == nil {
+            return
         }
         
-        if let tweet = socialArray[indexPath.row] as? Tweet {
+        let frame = collectionView.layoutAttributesForItemAtIndexPath(indexPath)!.frame
+        
+        if GlobalAppWall.activeSocialWall.displayContent.count < indexPath.row {
+            return
+        }
+        
+        popupImage.image = GlobalAppWall.activeSocialWall.displayContent[indexPath.row].getImage()
+        if let post = GlobalAppWall.activeSocialWall.displayContent[indexPath.row] as? FacebookPost {
+            popupLabel.text = post.message
+            sideMessage.text = post.message
+        }
+        
+        if let tweet = GlobalAppWall.activeSocialWall.displayContent[indexPath.row] as? Tweet {
             popupLabel.text = tweet.text
+            sideMessage.text = tweet.text
         }
 
         
@@ -99,7 +163,7 @@ class SecondaryViewController: UIViewController, MosaicSocialWall {
         self.imgHeight.constant = frame.height
         self.imgWidth.constant = frame.width
 
-        self.popupView.alpha = 1
+        self.hiddenPopupView.alpha = 1
         self.popupImage.contentMode = .ScaleAspectFill
     
         self.viewBorderHeight.constant = 10
@@ -109,12 +173,17 @@ class SecondaryViewController: UIViewController, MosaicSocialWall {
         self.detailViewBottom.active = false
         self.imgBottom.active = true
         
+        self.sideDetailView.alpha = 0
+        self.imgSide.active = true
+        self.sideDetailTrailingToSuperivew.active = false
+
+        
         self.startLayoutTimer()
        
     }
     
     func startLayoutTimer() {
-        self.timerLayout = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: #selector(SecondaryViewController.pauseLayout), userInfo: nil, repeats: false)
+        self.timerLayout = NSTimer.scheduledTimerWithTimeInterval(0.3, target: self, selector: #selector(SecondaryViewController.pauseLayout), userInfo: nil, repeats: false)
     }
     
     func startPopoutTimer() {
@@ -122,16 +191,14 @@ class SecondaryViewController: UIViewController, MosaicSocialWall {
     }
     
     func pauseLayout() {
-        
-//        let imageSize = popupImage.image.
-        
+        let aspectRatio = self.popupImage.image!.size.width / self.popupImage.image!.size.height
+
         UIView.animateWithDuration(1, delay: 0, options: .CurveEaseOut, animations: {
-            let aspectRatio = self.popupImage.image!.size.width / self.popupImage.image!.size.height
             if aspectRatio > 1 {
-                self.imgWidth.constant = self.view.bounds.width / 2
+                self.imgWidth.constant = self.view.bounds.width / 3
                 self.imgHeight.constant = self.imgWidth.constant / aspectRatio
             } else {
-                self.imgHeight.constant =  self.view.bounds.height / 2
+                self.imgHeight.constant =  self.view.bounds.height / 3
                 self.imgWidth.constant = self.imgHeight.constant * aspectRatio
             }
             
@@ -140,32 +207,29 @@ class SecondaryViewController: UIViewController, MosaicSocialWall {
             
             self.view.layoutIfNeeded()
             
-            self.popupView.alpha = 1
-
             }) { (true) in
-                UIView.animateWithDuration(1, animations: {
-                }) { (true) in
                     UIView.animateWithDuration(1, animations: {
                         self.popupImage.contentMode = .ScaleAspectFit
                         
-                        self.imgBottom.active = false
-                        self.detailViewBottom.active = true
-                        self.detailView.alpha = 1
+                        if aspectRatio > 1 {
+                            self.imgBottom.active = false
+                            self.detailViewBottom.active = true
+                            self.detailView.alpha = 1
+                        } else {
+                            self.sideDetailView.alpha = 1
+                            self.imgSide.active = false
+                            self.sideDetailTrailingToSuperivew.active = true
+                        }
                         self.view.layoutIfNeeded()
-                        }, completion: { (true) in
-                            UIView.animateWithDuration(1, animations: {
-//                                self.popupLabelBottom.active = false
-//                                self.popupHeight.active = true
-                            })
                     })
-                    
-                }
         }
-    
-     
         
     }
     
+    
+    
+
+
     func expandImage(indexPath: NSIndexPath) {
         
         func getFBImage(postUrl: NSURL) -> UIImage? {
@@ -235,9 +299,8 @@ class SecondaryViewController: UIViewController, MosaicSocialWall {
 
 
 extension SecondaryViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-        
-        
-        
+    
+    
         func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
             return 1
         }
@@ -249,7 +312,7 @@ extension SecondaryViewController : UICollectionViewDelegate, UICollectionViewDa
 
         
         func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return self.socialArray.count
+            return socialArray.count
         }
         
         func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -257,11 +320,12 @@ extension SecondaryViewController : UICollectionViewDelegate, UICollectionViewDa
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseID, forIndexPath: indexPath) as! TwitterCollectionViewCell
             
             let socialContent = socialArray[indexPath.row]
-//            print(indexPath)
             return makeUpCell(cell, content: socialContent)
             
+            
         }
+
         
-    }
+}
 
 

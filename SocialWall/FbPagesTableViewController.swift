@@ -131,19 +131,26 @@ class FbPagesTableViewController: UITableViewController {
     
     func deleteCoreObject(indexPath: NSIndexPath) {
         switch indexPath.section {
-        case 1:
+        case 0:
             if let objToDelete = CoreDataHelpers.fetchObjects(FacebookPage.PageKeys.kEntityName, predicate: GlobalAppWall.activeSocialWall.pages[indexPath.row].pageID) {
                 if objToDelete.count == 1 {
                     GlobalAppWall.managedContext.deleteObject(objToDelete[0])
                 }
-            }
-        case 2:
+            } 
+        case 1:
             if let objToDelete = CoreDataHelpers.fetchObjects(FacebookPage.PageKeys.kEntityName, predicate: GlobalAppWall.inactiveFBPages[indexPath.row].pageID) {
                 if objToDelete.count == 1 {
                     GlobalAppWall.managedContext.deleteObject(objToDelete[0])
+                   
                 } 
             }
         default: break
+        }
+        
+        do {
+            try GlobalAppWall.managedContext.save()
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
         }
     }
     

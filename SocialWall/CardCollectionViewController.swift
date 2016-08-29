@@ -22,12 +22,10 @@ class CardCollectionViewController: DeviceViewController {
         
         self.collectionView.allowsSelection = false
         self.collectionView.allowsMultipleSelection = true
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func collectionDoubleTap(sender: UITapGestureRecognizer) {
@@ -49,7 +47,11 @@ class CardCollectionViewController: DeviceViewController {
         
         alertController!.addTextFieldWithConfigurationHandler(
             {(textField: UITextField!) in
-                textField.placeholder = "hashtag"
+                if GlobalAppWall.activeSocialWall.currentHashtag == "" {
+                    textField.placeholder = "hashtag" }
+                else {
+                    textField.text = GlobalAppWall.activeSocialWall.currentHashtag
+                }
         })
         
         let action = UIAlertAction(title: "Search",
@@ -60,11 +62,28 @@ class CardCollectionViewController: DeviceViewController {
                                         let theTextFields = textFields as [UITextField]
                                         if let enteredText = theTextFields[0].text {
                                             GlobalAppWall.activeSocialWall.currentHashtag = enteredText
-                                            self!.getActiveSocialWall()
+                                            GlobalAppWall.activeSocialWall.showTweets = true
+                                            GlobalAppWall.activeSocialWall.saveWall()
+                                            self?.getActiveSocialWall()
                                         }
                                     }
             })
         
+        let removeAction = UIAlertAction(title: "Remove Hashtag",
+                                   style: UIAlertActionStyle.Destructive,
+                                   handler: {[weak self]
+                                    (paramAction:UIAlertAction!) in
+                                    if let textFields = alertController?.textFields{
+                                        let theTextFields = textFields as [UITextField]
+                                        if let enteredText = theTextFields[0].text {
+                                            GlobalAppWall.activeSocialWall.showTweets = false
+                                            GlobalAppWall.activeSocialWall.saveWall()
+                                            GlobalAppWall.activeSocialWall.setDisplayContent(self!)
+                                        }
+                                    }
+            })
+        
+        alertController?.addAction(removeAction)
         alertController?.addAction(action)
         self.presentViewController(alertController!,
                                    animated: true,
@@ -72,14 +91,30 @@ class CardCollectionViewController: DeviceViewController {
         
     }
     
+    func replaceSocialWall() {
+        GlobalAppWall.activeSocialWall.displayContent.removeAll()
+        self.collectionView.reloadData()
+        secondaryController.setToDummyArray()
+        secondaryController.collectionView.reloadData()
+    }
+    
     @IBAction func facebookToggle(sender: AnyObject) {
+        //refresh data for facebook
+        GlobalAppWall.activeSocialWall.showPosts = !GlobalAppWall.activeSocialWall.showPosts
+        removeDisplaysWhileLoading()
+        GlobalAppWall.activeSocialWall.setDisplayContent(self)
     }
+    
     @IBAction func twitterToggle(sender: AnyObject) {
-    }
-    @IBAction func instagramToggle(sender: AnyObject) {
+        connectToTwitter(sender)
     }
 
     @IBAction func save(sender: AnyObject) {
+        
+
+    }
+    
+    @IBAction func refresh(sender: AnyObject) {
         self.collectionView.allowsSelection = !self.collectionView.allowsSelection
         if self.collectionView.allowsSelection == true {
             for post in GlobalAppWall.activeSocialWall.savedPosts {
@@ -99,15 +134,11 @@ class CardCollectionViewController: DeviceViewController {
         }
     }
     
-    @IBAction func refresh(sender: AnyObject) {
-    }
-    
 }
 
 extension CardCollectionViewController: DeviceController {
     
     func performSingleScreenOperations() {
-        
         dispatch_async(dispatch_get_main_queue(), {
             self.collectionView.alpha = 1
             self.collectionView.reloadData()
@@ -117,14 +148,27 @@ extension CardCollectionViewController: DeviceController {
     }
     
     func performDualScreenOperations() {
-        secondaryController.socialArray = GlobalAppWall.activeSocialWall.displayContent
         print("dualScreen")
         dispatch_async(dispatch_get_main_queue(), {
+            self.collectionView.alpha = 1
             self.collectionView.reloadData()
-            
+            self.socialWallLogo.alpha = 0
         })
 
         secondaryController.updateCollectionView()
+    }
+    
+    func removeDisplaysWhileLoading() {
+        GlobalAppWall.activeSocialWall.displayContent.removeAll()
+        dispatch_async(dispatch_get_main_queue(), {
+            self.collectionView.reloadData()
+//            self.collectionView.alpha = 0
+//            self.socialWallLogo.alpha = 1
+        })
+        
+//        secondaryController.setToDummyArray()
+//        secondaryController.updateCollectionView()
+
     }
 
 }
@@ -148,13 +192,6 @@ extension CardCollectionViewController: UICollectionViewDataSource, UICollection
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
-    
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-//        let picDimension = self.view.frame.size.width / 4.0
-//        
-//        return CGSizeMake(picDimension, picDimension)
-//    }
-    
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         

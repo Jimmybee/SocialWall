@@ -67,6 +67,7 @@ class FbPageSearchTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         searchController.active = false
         pagesFound[indexPath.row].editSave()
+        GlobalAppWall.wallNeedsLoading = true
         self.dismissViewControllerAnimated(false, completion: nil)
         
         delegate.updateDetail(pagesFound[indexPath.row])
@@ -103,12 +104,10 @@ class FbPageSearchTableViewController: UITableViewController {
     }
     
     func handleFbPageSearch (pages: [FacebookPage]) {
-        print(pages.count)
         pagesFound = pages
         
         dispatch_async(dispatch_get_main_queue(), {
             self.tableView.reloadData()
-            
         })
         
     }

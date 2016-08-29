@@ -26,19 +26,22 @@ public class TwitterRequest
 {
     public let requestType: String
     public let parameters: [String:String]
+    public let withMedia: Bool
     
     // designated initializer
-    public init(_ requestType: String, _ parameters: Dictionary<String, String> = [:]) {
+    public init(_ requestType: String, _ parameters: Dictionary<String, String> = [:], withMedia: Bool) {
         self.requestType = requestType
         self.parameters = parameters
+        self.withMedia = withMedia
     }
     
     // convenience initializer for creating a TwitterRequest that is a search for Tweets
-    public convenience init(search: String, count: Int = 0, _ resultType: SearchResultType = .Mixed, _ region: CLCircularRegion? = nil) {
+    public convenience init(search: String, count: Int = 0, _ resultType: SearchResultType = .Mixed, _ region: CLCircularRegion? = nil,  withMedia: Bool) {
         var parameters = [TwitterKey.Query : search]
         if count > 0 {
             parameters[TwitterKey.Count] = "\(count)"
         }
+        parameters[TwitterKey.Filter] = "safe"
         switch resultType {
             case .Recent: parameters[TwitterKey.ResultType] = TwitterKey.ResultTypeRecent
             case .Popular: parameters[TwitterKey.ResultType] = TwitterKey.ResultTypePopular
@@ -47,7 +50,7 @@ public class TwitterRequest
         if let geocode = region {
             parameters[TwitterKey.Geocode] = "\(geocode.center.latitude),\(geocode.center.longitude),\(geocode.radius/1000.0)km"
         }
-        self.init(TwitterKey.SearchForTweets, parameters)
+        self.init(TwitterKey.SearchForTweets, parameters, withMedia: withMedia)
     }
 
     public enum SearchResultType {
@@ -73,9 +76,14 @@ public class TwitterRequest
                 tweetArray = array
             }
             if tweetArray != nil {
+                print("tweets returned\(tweetArray?.count)")
                 for tweetData in tweetArray! {
                     if let tweet = Tweet(data: tweetData as? NSDictionary) {
-                        tweets.append(tweet)
+                        if self.withMedia {
+                            if tweet.media.count > 0 {
+                                tweets.append(tweet)
+                            }
+                        }
                     }
                 }
             }
@@ -196,7 +204,7 @@ public class TwitterRequest
             newParameters[key] = value
         }
         if clearCount { newParameters[TwitterKey.Count] = nil }
-        return TwitterRequest(requestType, newParameters)
+        return TwitterRequest(requestType, newParameters, withMedia: withMedia)
     }
     
     // captures the min_id and max_id information
@@ -242,6 +250,7 @@ public class TwitterRequest
     struct TwitterKey {
         static let Count = "count"
         static let Query = "q"
+        static let Filter = "filter"
         static let Tweets = "statuses"
         static let ResultType = "result_type"
         static let ResultTypeRecent = "recent"

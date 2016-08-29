@@ -10,7 +10,7 @@
     </entity>
     <entity name="Hashtags" syncable="YES">
         <attribute name="hashtag" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="wall" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SocialWall" inverseName="hashtags" inverseEntity="SocialWall" syncable="YES"/>
+        <relationship name="wall" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SocialWall" inverseName="hashtagHistory" inverseEntity="SocialWall" syncable="YES"/>
     </entity>
     <entity name="Post" syncable="YES">
         <attribute name="from" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,8 +22,9 @@
         <relationship name="wall" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SocialWall" inverseName="posts" inverseEntity="SocialWall" syncable="YES"/>
     </entity>
     <entity name="SocialWall" syncable="YES">
+        <attribute name="currentHashtag" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="hashtags" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Hashtags" inverseName="wall" inverseEntity="Hashtags" syncable="YES"/>
+        <relationship name="hashtagHistory" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Hashtags" inverseName="wall" inverseEntity="Hashtags" syncable="YES"/>
         <relationship name="pages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacebookPage" inverseName="wall" inverseEntity="FacebookPage" syncable="YES"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="wall" inverseEntity="Post" syncable="YES"/>
         <relationship name="tweets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tweet" inverseName="wall" inverseEntity="Tweet" syncable="YES"/>
@@ -37,7 +38,7 @@
     <elements>
         <element name="FacebookPage" positionX="-378" positionY="-18" width="128" height="133"/>
         <element name="Post" positionX="-207" positionY="54" width="128" height="150"/>
-        <element name="SocialWall" positionX="-54" positionY="27" width="128" height="120"/>
+        <element name="SocialWall" positionX="-54" positionY="27" width="128" height="135"/>
         <element name="Tweet" positionX="-216" positionY="36" width="128" height="105"/>
         <element name="Hashtags" positionX="-216" positionY="81" width="128" height="75"/>
     </elements>

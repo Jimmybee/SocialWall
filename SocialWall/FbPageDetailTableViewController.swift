@@ -15,6 +15,9 @@ extension FbPageDetailTableViewController: PageSearchDelegate {
         self.page = page
         GlobalAppWall.activeSocialWall.pages.append(page)
         self.updateUI()
+        GlobalAppWall.activeSocialWall.saveWall()
+        GlobalAppWall.wallNeedsLoading = true
+
     }
 }
 
@@ -51,7 +54,6 @@ class FbPageDetailTableViewController: UITableViewController {
     override func viewWillDisappear(animated : Bool) {
         super.viewWillDisappear(animated)
 
-        
         if (self.isMovingFromParentViewController()){
             page.active = activeSwitch.on
             if activeSwitch.on == false {

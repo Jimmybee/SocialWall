@@ -21,12 +21,31 @@ class HelperFunctions {
     
         
     
-    static func getImage(imageView: UIImageView, postUrl: NSURL)  {
+    static func getImage(imageView: UIImageView, postUrl: NSURL, post: FacebookPost? = nil, tweet: Tweet? = nil)  {
         if let data = NSData(contentsOfURL: postUrl){
             dispatch_async(dispatch_get_main_queue(), {
                 imageView.image = UIImage(data: data)
+                if let socialItem = post {socialItem.mediaItem.image = UIImage(data: data)}
+                if let socialItem = tweet {socialItem.media[0].image = UIImage(data: data)}
             })
         }
     }
 
+}
+
+extension String {
+    
+    subscript (i: Int) -> Character {
+        return self[self.startIndex.advancedBy(i)]
+    }
+    
+    subscript (i: Int) -> String {
+        return String(self[i] as Character)
+    }
+    
+    subscript (r: Range<Int>) -> String {
+        let start = startIndex.advancedBy(r.startIndex)
+        let end = start.advancedBy(r.endIndex - r.startIndex)
+        return self[Range(start ..< end)]
+    }
 }

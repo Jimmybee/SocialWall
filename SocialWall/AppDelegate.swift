@@ -13,6 +13,13 @@ struct GlobalAppWall {
     static let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     static var wallNeedsLoading = true
     static var fetchingData = 0
+    static var screenConnected:Bool {
+        if (UIScreen.screens().count == 1) {
+            return false
+        } else {
+            return true
+        }
+    }
 }
 
 import UIKit
@@ -52,13 +59,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let socialWallObject = CoreDataHelpers.fetchObjects(SocialWall.Keys.kEntityName, predicate: GlobalAppWall.kCoreDataId) {
             print("walls = \(socialWallObject.count)")
             GlobalAppWall.activeSocialWall = SocialWall(object: socialWallObject[0])
+            print("currentHashtag = \(GlobalAppWall.activeSocialWall.currentHashtag)")
             if  let objects = CoreDataHelpers.fetchObjects(FacebookPage.PageKeys.kEntityName) {
                 print("pages = \(objects.count)")
                 for page in objects {
                     if let pageName = page.valueForKey(FacebookPage.PageKeys.kName) as? String  {
-                        if GlobalAppWall.activeSocialWall.pages.contains({aPage in aPage.pageName == pageName}) {
-                               GlobalAppWall.activeSocialWall.pages.append(FacebookPage(object: page))
-                        } else {
+                        if !GlobalAppWall.activeSocialWall.pages.contains({aPage in aPage.pageName == pageName}) {
                             GlobalAppWall.inactiveFBPages.append(FacebookPage(object: page))
                         }
                     }
@@ -69,6 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     //Managing connection and disconnection of screens.
     func screenConnectionStatusChanged () {
+        if GlobalAppWall.screenConnected {
+            print("connected")
+        } else {
+            print("not connected")
+        }
         if (UIScreen.screens().count == 1) {
             secondaryWindow!.rootViewController = nil
             

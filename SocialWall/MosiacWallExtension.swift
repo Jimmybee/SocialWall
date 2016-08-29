@@ -25,7 +25,8 @@ extension MosaicSocialWall {
     func makeUpCell (cell: TwitterCollectionViewCell, content: SocialContent) -> TwitterCollectionViewCell {
         
         if let post = content as? FacebookPost {
-            cell.url = post.mediaItem.url
+//            cell.url = post.mediaItem.url
+            cell.post = post
             cell.tweetLabel.alpha = 0
         }
         
@@ -33,7 +34,7 @@ extension MosaicSocialWall {
             if tweet.media.count > 0 {
                 if let url = tweet.media[0].url {
                     //                    print(url)
-                    cell.url = url
+                    cell.tweet = tweet
                     //                    HelperFunctions.getImage(cell.cellImage, postUrl: url)
                 }
                 cell.tweetLabel.alpha = 0

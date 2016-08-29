@@ -22,35 +22,41 @@ class MosiacCollectionViewLayout: UICollectionViewLayout {
     
     var cellAttributes = [NSIndexPath : UICollectionViewLayoutAttributes]()
     
-    func addGridSpace(row: Int, col: Int) {
-        let gridSpace = gridSpaceUsed(row: row, col: col)
-        gridUsed.append(gridSpace)
+    func addGridSpace(row: Int, toRow: Int, col: Int, toCol: Int) {
+        for addRow in row...toRow {
+            for addCol in col...toCol{
+                let gridSpace = gridSpaceUsed(row: addRow, col: addCol)
+                gridUsed.append(gridSpace)
+            }
+        }
+ 
     }
     
-    func addLargeGridSpace(row: Int, col: Int) {
-        addGridSpace(row, col: col)
-        addGridSpace(row+1, col: col)
-        addGridSpace(row, col: col+1)
-        addGridSpace(row+1, col: col+1)
+    func checkGridUsed(row: Int, toRow: Int, col: Int, toCol: Int) -> Bool {
+        var gridUsed = false
+        for checkRow in  row...toRow {
+            for checkCol in col...toCol {
+                if !isGridFree(checkRow, col: checkCol) {
+                    gridUsed = true
+                }
+            }
+        }
+        return !gridUsed
     }
     
-    func checkLargeGridFree(row: Int, col: Int) -> Bool {
-        if !checkSmallGridFree(row, col: col) {
-            return false
+    func checkAnyGridFree(row: Int, toRow: Int, col: Int, toCol: Int) -> Bool {
+        var gridFree = false
+        for checkRow in  row...toRow {
+            for checkCol in col...toCol {
+                if isGridFree(checkRow, col: checkCol) {
+                    gridFree = true
+                }
+            }
         }
-        if !checkSmallGridFree(row, col: col+1) {
-            return false
-        }
-        if !checkSmallGridFree(row+1, col: col) {
-            return false
-        }
-        if !checkSmallGridFree(row+1, col: col+1) {
-            return false
-        }
-        return true
+        return gridFree
     }
-    
-    func checkSmallGridFree(row: Int, col: Int) -> Bool {
+        
+    func isGridFree(row: Int, col: Int) -> Bool {
         var gridFound = true
         if let index = gridUsed.indexOf({ (grid) -> Bool in
           grid.gridRow == row && grid.gridCol == col
@@ -61,17 +67,17 @@ class MosiacCollectionViewLayout: UICollectionViewLayout {
         
         return gridFound
     }
-
+    
     
     override func prepareLayout() {
         super.prepareLayout()
         
         createGrid()
         
+
         var yOffset = CGFloat(0)
         var xOffset = CGFloat(0)
-        
-        let path = NSIndexPath(forItem: 0, inSection: 0)
+        var attributeFrame = CGRect()
         
         let section = self.collectionView!.numberOfSections() - 1
         var numberOfItems = 0
@@ -81,110 +87,66 @@ class MosiacCollectionViewLayout: UICollectionViewLayout {
         
         let maxRow = Int(screenHeight / gridSize)
         let maxCol = Int(screenWidth / gridSize)
-
-        for col in 0...maxCol {
-            addGridSpace(maxRow, col: col)
-        }
         
-        for row in 0...maxRow {
-            addGridSpace(row, col: maxCol)
-        }
+        gridUsed.removeAll()
+        addGridSpace(maxRow, toRow: maxRow, col: 0, toCol: maxCol)
+        addGridSpace(0, toRow: maxRow, col: maxCol, toCol: maxCol)
         
         let totalGridSquares = maxCol * maxRow
-        var item = 0
+//        if totalGridSquares == 0 {return}
         
-        let iterations = min(totalGridSquares, numberOfItems)
+        let iterations = numberOfItems
+
         
-        for _ in 0...iterations {
-            
-            let indexPath = NSIndexPath(forItem: item, inSection: section)
-            let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath) // 4
-            
+        for item in 0...iterations - 1  {
             var itemSize = CGSizeZero
             
+
+            var randomChoice = Int(arc4random_uniform(UInt32(1)))
             
-            let colNum = Int(xOffset / gridSize)
-            let rowNum = Int(yOffset / gridSize)
-            
-            if checkLargeGridFree(rowNum, col: colNum) {
+            while itemSize == CGSizeZero {
+                let colNum = Int(xOffset / gridSize)
+                let rowNum = Int(yOffset / gridSize)
                 
-                let randomChoice = Int(arc4random_uniform(UInt32(2)))
-                
-                if randomChoice == 1 {
-                    itemSize.width = gridSize * 2
-                    itemSize.height = gridSize * 2
-                    addLargeGridSpace(rowNum, col: colNum)
-                    item += 1
-                    
-                    
-                    // 4.4.3: Generate and store layout attributes for the cell
-                    let cellIndexPath = NSIndexPath(forItem: item, inSection: section)
-                    let sigleCellAttributes =
-                        UICollectionViewLayoutAttributes(forCellWithIndexPath: cellIndexPath)
-                    
-                    cellAttributes[cellIndexPath] = sigleCellAttributes
-                    sigleCellAttributes.frame = CGRectMake(xOffset, yOffset, itemSize.width, itemSize.height)
-                    
-                    
-
-                
-                } else {
-                    itemSize.width = gridSize
-                    itemSize.height = gridSize
-                    addGridSpace(rowNum, col: colNum)
-                    item += 1
-                    
-                    
-                    // 4.4.3: Generate and store layout attributes for the cell
-                    let cellIndexPath = NSIndexPath(forItem: item, inSection: section)
-                    let sigleCellAttributes =
-                        UICollectionViewLayoutAttributes(forCellWithIndexPath: cellIndexPath)
-                    
-                    cellAttributes[cellIndexPath] = sigleCellAttributes
-                    sigleCellAttributes.frame = CGRectMake(xOffset, yOffset, itemSize.width, itemSize.height)
-                    
-                    
-
-
+                if checkGridUsed(rowNum, toRow: rowNum+2, col: colNum, toCol: colNum+2) {
+                    randomChoice = Int(arc4random_uniform(UInt32(3)))
+                } else if checkGridUsed(rowNum, toRow: rowNum+1, col: colNum, toCol: colNum+1) {
+                    randomChoice = Int(arc4random_uniform(UInt32(2)))
                 }
-            } else if checkSmallGridFree(rowNum, col: colNum) {
-                itemSize.width = gridSize
-                itemSize.height = gridSize
-                addGridSpace(rowNum, col: colNum)
-
-                item += 1
                 
+                    switch randomChoice {
+                    case 2:
+                        addGridSpace(rowNum, toRow: rowNum+2, col: colNum, toCol: colNum+2)
+                        itemSize = CGSizeMake(gridSize*3, gridSize*3)
+                    case 1:
+                        addGridSpace(rowNum, toRow: rowNum+1, col: colNum, toCol: colNum+1)
+                        itemSize = CGSizeMake(gridSize*2, gridSize*2)
+                    default:
+                        if checkGridUsed(rowNum, toRow: rowNum, col: colNum, toCol: colNum) {
+                            addGridSpace(rowNum, toRow: rowNum, col: colNum, toCol: colNum)
+                            itemSize = CGSizeMake(gridSize, gridSize)
+                        }
+                    }
                 
-                // 4.4.3: Generate and store layout attributes for the cell
-                let cellIndexPath = NSIndexPath(forItem: item, inSection: section)
-                let sigleCellAttributes =
-                    UICollectionViewLayoutAttributes(forCellWithIndexPath: cellIndexPath)
+                 attributeFrame = CGRectMake(xOffset, yOffset, itemSize.width, itemSize.height)
                 
-                cellAttributes[cellIndexPath] = sigleCellAttributes
-                sigleCellAttributes.frame = CGRectMake(xOffset, yOffset, itemSize.width, itemSize.height)
-                
-                
-
+                xOffset += gridSize
+                if xOffset >= screenWidth {
+                    xOffset = 0
+                    yOffset += gridSize
+                }
+            
             }
-   
-            xOffset += gridSize
-            if xOffset >= screenWidth {
-                xOffset = 0
-                yOffset += gridSize
-            }
             
-  
-            
-            
-            //            attributes.frame = CGRectIntegral(CGRectMake(xOffset, yOffset, itemSize.width, itemSize.height))
-            //            let key = layoutKeyForIndexPath(indexPath)
-            //            _layoutAttributes[key] = attributes
-            //            print(key)
-            //            print(_layoutAttributes[key])
-            
-         
+            let indexPath = NSIndexPath(forItem: item, inSection: section)
+            let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+            cellAttributes[indexPath] = attributes
+            attributes.frame = attributeFrame
+           
         }
     }
+    
+    
     
     
     func layoutKeyForIndexPath(indexPath : NSIndexPath) -> String {

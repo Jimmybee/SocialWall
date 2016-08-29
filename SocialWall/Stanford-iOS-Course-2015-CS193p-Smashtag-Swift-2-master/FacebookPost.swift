@@ -23,6 +23,9 @@ class FacebookPost: SocialContent {
     var mediaItem = MediaItem()
     
     func getImage() -> UIImage? {
+//        if let image = mediaItem.image {
+//            return image
+//        }
         if let data = NSData(contentsOfURL: self.mediaItem.url!){
             return UIImage(data: data)
         }
@@ -105,6 +108,7 @@ class FacebookPost: SocialContent {
     
     struct MediaItem {
         var url: NSURL? = nil
+        var image: UIImage? = nil
         
         init() {
             

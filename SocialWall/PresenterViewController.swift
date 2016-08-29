@@ -58,6 +58,10 @@ extension  PresenterViewController: DeviceController {
         secondaryController.updateCollectionView()
     }
     
+    func removeDisplaysWhileLoading(){
+        GlobalAppWall.activeSocialWall.displayContent.removeAll()
+        self.collectionView.reloadData()
+    }
 }
 
 
@@ -86,7 +90,7 @@ extension PresenterViewController : UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        print("should highlight \(indexPath)")
+        removeDisplaysWhileLoading()
         return true
     }
     
@@ -105,7 +109,7 @@ extension PresenterViewController : UICollectionViewDelegate, UICollectionViewDa
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.socialArray.count
+        return GlobalAppWall.activeSocialWall.displayContent.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -113,7 +117,7 @@ extension PresenterViewController : UICollectionViewDelegate, UICollectionViewDa
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseID, forIndexPath: indexPath) as! TwitterCollectionViewCell
         
-        let socialContent = socialArray[indexPath.row]
+        let socialContent = GlobalAppWall.activeSocialWall.displayContent[indexPath.row]
         
         return makeUpCell(cell, content: socialContent)
     }

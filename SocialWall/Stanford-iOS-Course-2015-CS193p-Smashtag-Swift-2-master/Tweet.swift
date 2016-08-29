@@ -22,7 +22,7 @@ public class Tweet : SocialContent, CustomStringConvertible
     public let id: String?
     public let retweets: Int!
     public let fabourites: Int!
-    public let media: [MediaItem]
+    public var media: [MediaItem]
     public let hashtags: [IndexedKeyword]
     public let urls: [IndexedKeyword]
     public let userMentions: [IndexedKeyword]
@@ -137,6 +137,9 @@ public class Tweet : SocialContent, CustomStringConvertible
     
     func getImage() -> UIImage? {
         if self.media.count > 0 {
+//            if let image = media[0].image {
+//                return image
+//            }
             if let data = NSData(contentsOfURL: self.media[0].url!){
                 return UIImage(data: data)
             }

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Stanford University. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // holds the network url and aspectRatio of an image attached to a Tweet
 // created automatically when a Tweet object is created
@@ -14,6 +14,7 @@ import Foundation
 public struct MediaItem
 {
     public let url: NSURL!
+    public var image: UIImage? = nil
     public let aspectRatio: Double
     
     public var description: String { return (url.absoluteString ?? "no url") + " (aspect ratio = \(aspectRatio))" }
